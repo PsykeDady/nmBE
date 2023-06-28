@@ -2,7 +2,6 @@ package co.psyke.nanosoftma.security;
 
 import static co.psyke.nanosoftma.security.Encryption.cryptedPsk;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,11 +15,9 @@ import co.psyke.nanosoftma.models.User;
 public class CustomUserDetail implements UserDetails {
 
 	private User u;
-	private LocalDateTime l; 
 
 	public CustomUserDetail(User u) {
 		this.u=u;
-		this.l=LocalDateTime.now();
 	}
 
 	@Override

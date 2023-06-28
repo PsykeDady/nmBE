@@ -26,10 +26,9 @@ public class UserService {
 	}
 
 	public User login(String email){
-
 		User u = userRepositories.findByEmail(email);
 
-		return null;
+		return u;
 	}
 	public void editInfo(User u){
 

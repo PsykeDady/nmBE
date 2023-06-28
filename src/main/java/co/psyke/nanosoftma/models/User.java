@@ -13,7 +13,6 @@ import jakarta.persistence.GenerationType;
 public record User (
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@NotNull
 	Long id, 
 	@NotBlank
 	String name,
