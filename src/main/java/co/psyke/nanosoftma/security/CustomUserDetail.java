@@ -29,12 +29,12 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return cryptedPsk(u.pskH());
+		return cryptedPsk(u.getPskH());
 	}
 
 	@Override
 	public String getUsername() {
-		return u.email();
+		return u.getEmail();
 	}
 
 	@Override

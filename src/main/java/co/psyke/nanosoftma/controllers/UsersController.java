@@ -13,16 +13,12 @@ import co.psyke.nanosoftma.models.User;
 import co.psyke.nanosoftma.services.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @CrossOrigin(originPatterns = "*")
 public class UsersController {
 	
 	@Autowired
 	UserService userService; 
 
-	@PostMapping("/login")
-	public ResponseEntity<User> login (Authentication authentication){
-		User u= userService.login(authentication.getName());
-		return ResponseEntity.ok().body(u);
-	}
+	
 }

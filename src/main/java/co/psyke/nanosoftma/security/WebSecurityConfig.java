@@ -19,8 +19,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	public final String SERVLETPATH="/nanosoftmedical"; 
-
 	@Bean
 	public UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -36,16 +34,17 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain (HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-		return http
-					.securityMatcher(SERVLETPATH)
-					.authorizeHttpRequests((auth)->
-						auth
-							.requestMatchers(HttpMethod.POST, "/register").permitAll()
-							.requestMatchers("/admin*").hasRole("ADMIN")
-							.anyRequest().authenticated()
-					)
-					.csrf((csrf)->csrf.disable())
-					.httpBasic(withDefaults())
-					.build();
+		http
+			.authorizeHttpRequests((auth)->
+				auth
+					.requestMatchers("/login").permitAll()
+					.requestMatchers("/register").permitAll()
+					.requestMatchers("/error").permitAll()
+					.requestMatchers("/register").authenticated()
+					.requestMatchers("/admin").hasRole("ADMIN")
+			)
+			.csrf((csrf)->csrf.disable())
+			.httpBasic(withDefaults());
+		return http.build();
 	}
 }

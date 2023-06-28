@@ -17,28 +17,33 @@ public class UserService {
 	private UserRepositories userRepositories; 
 
 	public Long register(User u){
-		if(userRepositories.findByEmail(u.email())!=null){
+		if(userRepositories.findByEmail(u.getEmail())!=null){
 			throw new IllegalArgumentException("email already registered");
 		}
-
-		u= new User(null,u.name(),u.email(),cryptedPsk(u.pskH()));
-		return userRepositories.save(u).id();
+		u.setPskH(cryptedPsk(u.getPskH()));
+		return userRepositories.save(u).getId();
 	}
 
 	public User login(String email){
 		User u = userRepositories.findByEmail(email);
-
 		return u;
 	}
+
 	public void editInfo(User u){
-
+		if(userRepositories.findById(u.getId())==null){
+			throw new IllegalArgumentException();
+		}
+		userRepositories.save(u);
 	}
+
 	public void logout(User u){
-
+		return;
 	}
+
 	public void viewCalendar(User u){
 
 	}
+
 	public void newAppointment(Appointment a){
 
 	}

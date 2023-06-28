@@ -1,24 +1,29 @@
 package co.psyke.nanosoftma.models;
 
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @Entity
-public record User (
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id, 
+	private Long id;
 	@NotBlank
-	String name,
+	private String name;
 	@Email
 	@NotBlank
-	String email,
+	private String email;
 	@NotBlank
-	String pskH
-) {}
+	private String pskH;
+}
