@@ -9,12 +9,13 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-
-@Entity
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
+@Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -1,13 +1,11 @@
 package co.psyke.nanosoftma.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.psyke.nanosoftma.models.Appointment;
 import co.psyke.nanosoftma.models.User;
 import co.psyke.nanosoftma.repositories.UserRepositories;
-
 import static co.psyke.nanosoftma.security.Encryption.cryptedPsk;
 
 @Service
@@ -24,9 +22,14 @@ public class UserService {
 		return userRepositories.save(u).getId();
 	}
 
-	public User login(String email){
-		User u = userRepositories.findByEmail(email);
+	public User login(String email,String pskH){
+		User u = userRepositories.findByEmailAndPskH(email,pskH);
+		
 		return u;
+	}
+
+	public User findByEmail(String email){
+		return userRepositories.findByEmail(email);
 	}
 
 	public void editInfo(User u){

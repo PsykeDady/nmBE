@@ -12,20 +12,20 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public record Appointment(
+public class Appointment{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long id,
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name="user_id",nullable = false)
-	User user,
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(name="doctor_id",nullable = false)
-	Doctor doctor,
+	private Doctor doctor;
 
 	@Column(nullable = false)
 	@NotNull
-	LocalDateTime appointmentDate
-)  {}
+	private LocalDateTime appointmentDate;
+}
