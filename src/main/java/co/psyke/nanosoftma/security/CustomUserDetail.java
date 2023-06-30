@@ -1,45 +1,29 @@
 package co.psyke.nanosoftma.security;
 
-import static co.psyke.nanosoftma.security.Encryption.cryptedPsk;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import co.psyke.nanosoftma.models.User;
-import co.psyke.nanosoftma.services.UserService;
 
 public class CustomUserDetail implements UserDetails {
 
 	private User u;
 
-	@Autowired
-	private UserService userService;
 
 	public CustomUserDetail(String email) {
-		this.u=userService.findByEmail(email);
+		this.u=new User();
+		u.setEmail(email);
 	}
 
-	public UserDetails loadUserByUsername (String email) throws UsernameNotFoundException {
-		User user=  userService.findByEmail(email); 
-		if(user==null){
-			throw new UsernameNotFoundException("no user found");
-		}
-		return new org.springframework.security.core.userdetails.User(
-			user.getEmail(),
-			user.getPskH(),
-			isEnabled(),
-			isAccountNonExpired(),
-			isCredentialsNonExpired(),
-			isAccountNonLocked(),
-			getAuthorities()
-		);
+	public static UserDetails loadUserByUsername (String email) throws UsernameNotFoundException {
+		CustomUserDetail cu= new CustomUserDetail(email);
+		return cu;
 	}
 
 	@Override
@@ -51,7 +35,7 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return cryptedPsk(u.getPskH());
+		return "ciao";
 	}
 
 	@Override
