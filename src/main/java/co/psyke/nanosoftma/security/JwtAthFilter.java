@@ -7,16 +7,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
-public class JwtAthFilter extends OncePerRequestFilter {+
+@Component
+@RequiredArgsConstructor
+public class JwtAthFilter extends OncePerRequestFilter {
 
 	public final String BEARER = "Bearer ";
+	
+	private final JWTUtils  jwtUtils; 
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -30,11 +36,11 @@ public class JwtAthFilter extends OncePerRequestFilter {+
 
 		final String jwtToken=authHeader.substring(BEARER.length()).trim();
 
-		final String userEmail="psdady@msn.com";
+		final String userEmail=jwtUtils.extractUsername(jwtToken);
 
 		if(userEmail != null && SecurityContextHolder.getContext().getAuthentication()== null){
 			UserDetails userDetails = CustomUserDetail.loadUserByUsername(userEmail);
-			final boolean isTokenValid = true;
+			final boolean isTokenValid = jwtUtils.isTokenValid(jwtToken, userDetails);
 
 			if(isTokenValid){
 				UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
