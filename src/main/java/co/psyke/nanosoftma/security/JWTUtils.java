@@ -1,6 +1,5 @@
 package co.psyke.nanosoftma.security;
 
-import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtHandler;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -26,7 +24,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTUtils {
 
-	@Value("#{jjwt.secret.keys}")
+	@Value("${jjwt.secret.keys}")
 	private String jwtSigningKey;
 
 	public final Long EXPIRATION_TIME=TimeUnit.MINUTES.toMillis(1); 

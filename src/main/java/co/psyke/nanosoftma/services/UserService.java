@@ -33,7 +33,7 @@ public class UserService {
 	}
 
 	public void editInfo(User u){
-		if(userRepositories.findById(u.getId())==null){
+		if(!userRepositories.findById(u.getId()).isPresent()){
 			throw new IllegalArgumentException();
 		}
 		userRepositories.save(u);
