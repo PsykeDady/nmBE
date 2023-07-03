@@ -19,27 +19,8 @@ public class CustomUserDetail implements UserDetails {
 
 	private User u;
 
-	@Autowired
-	private UserService userService;
-
-	public CustomUserDetail(String email) {
-		this.u=userService.findByEmail(email);
-	}
-
-	public UserDetails loadUserByUsername (String email) throws UsernameNotFoundException {
-		User user=  userService.findByEmail(email); 
-		if(user==null){
-			throw new UsernameNotFoundException("no user found");
-		}
-		return new org.springframework.security.core.userdetails.User(
-			user.getEmail(),
-			user.getPskH(),
-			isEnabled(),
-			isAccountNonExpired(),
-			isCredentialsNonExpired(),
-			isAccountNonLocked(),
-			getAuthorities()
-		);
+	public CustomUserDetail(String s) {
+		this.u=new User(0L, s, s, s);
 	}
 
 	@Override
