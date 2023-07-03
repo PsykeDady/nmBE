@@ -16,8 +16,8 @@ public class CustomUserDetail implements UserDetails {
 
 	private User u;
 
-	public CustomUserDetail(User u) {
-		this.u=u;
+	public CustomUserDetail(String s) {
+		this.u=new User(0L, s, s, s);
 	}
 
 	@Override
