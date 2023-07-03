@@ -1,45 +1,28 @@
 package co.psyke.nanosoftma.security;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-import co.psyke.nanosoftma.models.User;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
-import java.io.IOException;
+import co.psyke.nanosoftma.services.CustomUserDetailServices;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private CustomUserDetailServices userDetailsService; 
+
 
 	@Bean
 	public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
@@ -47,20 +30,33 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests((auth)->
 				auth
 					.requestMatchers("/register").permitAll()
+					.requestMatchers("/h2-console").permitAll()
 					.requestMatchers("/error").permitAll()
 					.requestMatchers("/admin").hasRole("ADMIN")
+					.anyRequest().authenticated()
 			)
-			.addFilterBefore(new Filter() {
+			.authenticationProvider(new AuthenticationProvider() {
 
 				@Override
-				public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-						throws IOException, ServletException {
-					
+				public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+					String username = authentication.getPrincipal().toString();
+					UserDetails customUserDetail = userDetailsService.loadUserByUsername(username);
+
+					return new UsernamePasswordAuthenticationToken(
+						(Object)customUserDetail.getUsername(),
+						(Object)customUserDetail.getPassword(),
+						customUserDetail.getAuthorities()
+					);
+				}
+
+				@Override
+				public boolean supports(Class<?> authentication) {
+					return authentication.equals(UsernamePasswordAuthenticationToken.class);
 				}
 				
-			}, UsernamePasswordAuthenticationFilter.class)
+			})
 			.csrf((csrf)->csrf.disable())
-			.httpBasic(withDefaults());
+			.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}
 
