@@ -28,8 +28,10 @@ public class UserService {
 		return u;
 	}
 
-	public User findByEmail(String email){
-		return userRepositories.findByEmail(email);
+	public User getByEmail (String email) {
+		User u = userRepositories.findByEmail(email); 
+		u.setPskH(null);
+		return u;
 	}
 
 	public void editInfo(User u){

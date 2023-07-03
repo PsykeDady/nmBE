@@ -27,7 +27,7 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public ResponseEntity<User> login (Authentication authentication){
-		User u= userService.findByEmail(authentication.getName());
+		User u= userService.getByEmail(authentication.getPrincipal().toString());
 		return ResponseEntity.ok().body(u);
 	}
 }

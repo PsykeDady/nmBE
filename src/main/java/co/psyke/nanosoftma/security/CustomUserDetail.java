@@ -1,7 +1,5 @@
 package co.psyke.nanosoftma.security;
 
-import static co.psyke.nanosoftma.security.Encryption.cryptedPsk;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,8 +14,8 @@ public class CustomUserDetail implements UserDetails {
 
 	private User u;
 
-	public CustomUserDetail(String s) {
-		this.u=new User(0L, s, s, s);
+	public CustomUserDetail(User u) {
+		this.u=new User(u.getId(), u.getName(), u.getEmail(), u.getPskH());
 	}
 
 	@Override
@@ -29,7 +27,7 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return cryptedPsk(u.getPskH());
+		return u.getPskH();
 	}
 
 	@Override
