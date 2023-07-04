@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import co.psyke.nanosoftma.models.User;
+import co.psyke.nanosoftma.entities.User;
 
 public class CustomUserDetail implements UserDetails {
 

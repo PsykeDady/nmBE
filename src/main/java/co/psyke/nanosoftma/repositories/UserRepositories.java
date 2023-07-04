@@ -3,7 +3,7 @@ package co.psyke.nanosoftma.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import co.psyke.nanosoftma.models.User;
+import co.psyke.nanosoftma.entities.User;
 
 public interface UserRepositories extends JpaRepository<User,Long>  {
 

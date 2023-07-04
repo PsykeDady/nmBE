@@ -1,4 +1,4 @@
-package co.psyke.nanosoftma.models;
+package co.psyke.nanosoftma.entities;
 
 import java.time.LocalDateTime;
 

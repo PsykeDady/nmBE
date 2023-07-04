@@ -1,5 +1,6 @@
-package co.psyke.nanosoftma.models;
+package co.psyke.nanosoftma.entities;
 
+import co.psyke.nanosoftma.models.DoctorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -16,6 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 @Data
 public class Doctor {
+
 	@Id
 	private Long id; 
 
@@ -25,5 +27,5 @@ public class Doctor {
 	private User u;
 
 	@NotBlank
-	private String specialty;
+	private DoctorType specialty;
 }
