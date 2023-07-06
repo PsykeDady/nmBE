@@ -22,4 +22,5 @@ public class User {
 	
 	@NotBlank
 	private String name;
+
 }

@@ -23,11 +23,11 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(originPatterns = "*")
-public class UsersController {
+public class UserController {
 	
 	@Autowired
 	UserService userService; 
-
+	
 	@Autowired
 	AppointmentService appointmentService;
 

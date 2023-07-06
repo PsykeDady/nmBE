@@ -24,6 +24,7 @@ public class UserService {
 	private CredentialRepository credentialRepository; 
 
 	public void deleteUser (String email) {
+		credentialRepository.deleteById(email);
 		userRepositories.deleteById(email);
 	}
 

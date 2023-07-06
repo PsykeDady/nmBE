@@ -1,6 +1,5 @@
 package co.psyke.nanosoftma.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -24,7 +23,7 @@ public class Credential {
 	private String email; 
 
 	@MapsId
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne
 	@JoinColumn(name="user_email",nullable = false)
 	private User user;
 
