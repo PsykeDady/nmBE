@@ -57,7 +57,7 @@ public class WebSecurityConfig {
 
 				@Override
 				public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-					String username = authentication.getPrincipal().toString();
+					String username = authentication.getName().toString();
 
 					if(username.startsWith(BEARER)){
 						//is token
@@ -73,7 +73,7 @@ public class WebSecurityConfig {
 						
 						if( passwordEncoder().matches(authentication.getCredentials().toString(), customUserDetail.getPassword()) )
 							return new UsernamePasswordAuthenticationToken(
-								(Object)authentication.getPrincipal(),
+								(Object)authentication.getName(),
 								(Object)authentication.getCredentials(),
 								customUserDetail.getAuthorities()
 							);

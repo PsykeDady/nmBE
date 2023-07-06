@@ -8,14 +8,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import co.psyke.nanosoftma.entities.User;
+import co.psyke.nanosoftma.entities.Credential;
 
 public class CustomUserDetail implements UserDetails {
 
-	private User u;
+	private Credential c;
 
-	public CustomUserDetail(User u) {
-		this.u=new User(u.getId(), u.getName(), u.getEmail(), u.getPskH());
+	public CustomUserDetail(Credential c) {
+		this.c=new Credential(c.getEmail(),c.getUser(),c.getPskH());
 	}
 
 	@Override
@@ -27,12 +27,12 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return u.getPskH();
+		return c.getPskH();
 	}
 
 	@Override
 	public String getUsername() {
-		return u.getEmail();
+		return c.getUser().getEmail();
 	}
 
 	@Override

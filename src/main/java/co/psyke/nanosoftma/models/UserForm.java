@@ -3,6 +3,7 @@ package co.psyke.nanosoftma.models;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * UserForm
@@ -15,7 +16,7 @@ public record UserForm (
 	String email,
 	@NotBlank
 	String pskH,
-	@NotBlank
+	@NotNull
 	UserType user,
 	@Nullable
 	DoctorType doctorType

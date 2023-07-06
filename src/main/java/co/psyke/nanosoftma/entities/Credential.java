@@ -1,9 +1,7 @@
 package co.psyke.nanosoftma.entities;
 
-import co.psyke.nanosoftma.models.DoctorType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
@@ -12,21 +10,24 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@Entity
-@EqualsAndHashCode
+
 @Data
-public class Doctor {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Entity
+public class Credential {
+	
 	@Id
 	private String email; 
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "user_email")
 	@MapsId
-	private User u;
+	@OneToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name="user_email",nullable = false)
+	private User user;
 
 	@NotBlank
-	private DoctorType specialty;
+	private String pskH;
 }

@@ -4,6 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import co.psyke.nanosoftma.entities.Doctor;
 
-public interface DoctorRepositories extends JpaRepository<Doctor,Long> {
-	
-}
+public interface DoctorRepositories extends JpaRepository<Doctor,String> {}

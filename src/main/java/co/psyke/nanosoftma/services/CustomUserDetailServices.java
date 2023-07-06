@@ -6,26 +6,26 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import co.psyke.nanosoftma.entities.User;
-import co.psyke.nanosoftma.repositories.UserRepositories;
+import co.psyke.nanosoftma.entities.Credential;
+import co.psyke.nanosoftma.repositories.CredentialRepository;
 import co.psyke.nanosoftma.security.CustomUserDetail;
 
 @Service
 public class CustomUserDetailServices implements UserDetailsService{
 
 	@Autowired
-	private UserRepositories userRepositories; 
+	private CredentialRepository credentialRepository; 
 
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		User user = userRepositories.findByEmail(username);
+		Credential credential = credentialRepository.findById(username).get();
 
-		if(user==null) 
+		if(credential==null) 
 			throw new UsernameNotFoundException("username" + username + "not found");
 		
-		return new CustomUserDetail(user);
+		return new CustomUserDetail(credential);
 	}
 	
 }
