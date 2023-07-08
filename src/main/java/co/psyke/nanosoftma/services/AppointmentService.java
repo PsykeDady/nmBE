@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;
-import co.psyke.nanosoftma.models.AppointmentForm;
 import co.psyke.nanosoftma.repositories.AppointmentRepositories;
 import co.psyke.nanosoftma.repositories.DoctorRepositories;
 import co.psyke.nanosoftma.repositories.UserRepositories;

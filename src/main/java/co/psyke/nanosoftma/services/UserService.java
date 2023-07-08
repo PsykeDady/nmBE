@@ -5,7 +5,6 @@ import static co.psyke.nanosoftma.security.Encryption.cryptedPsk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.Credential;
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;

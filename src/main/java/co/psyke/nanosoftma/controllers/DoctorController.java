@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.services.DoctorService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @RestController
 @CrossOrigin(originPatterns = "*")
