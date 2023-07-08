@@ -35,3 +35,4 @@ build/
 
 ### DB ###
 nanosoftmedicaldb.mv.db
+nanosoftmedicaldb.trace.db

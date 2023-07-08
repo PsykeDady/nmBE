@@ -26,5 +26,13 @@ public enum DoctorType {
 	PATHOLOGY,
 	PHARMACOLOGY,
 	PSYCHIATRY,
-	NONE
+	NONE;
+
+	public static boolean present(String s) {
+		for(DoctorType type : values()){
+			if(type.toString().equals(s)) 
+				return true; 
+		}	
+		return false; 
+	}
 }

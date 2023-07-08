@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.psyke.nanosoftma.entities.User;
 import co.psyke.nanosoftma.models.UserForm;
-import co.psyke.nanosoftma.services.DoctorService;
 import co.psyke.nanosoftma.services.UserService;
 import jakarta.validation.Valid;
 
@@ -23,19 +22,9 @@ public class LoginController {
 	@Autowired
 	private UserService userService; 
 
-	@Autowired
-	private DoctorService doctorService; 
-
 	@PostMapping("/register")
 	public ResponseEntity<Void> register(@RequestBody @Valid UserForm uf){
 		userService.register(uf);
-		switch (uf.user()){
-			case DOCTOR: 
-				doctorService.registerDoctor(uf);
-			break; 
-
-			default: ; 
-		}
 		
 		return ResponseEntity.ok().body(null);
 	}

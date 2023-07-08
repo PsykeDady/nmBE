@@ -37,8 +37,8 @@ public class UserController {
 		return ResponseEntity.ok().body(null);
 	}
 
-	@GetMapping("/appointments")
-	public ResponseEntity<List<Appointment>> appointments (Authentication a) {
+	@GetMapping("/myappointments")
+	public ResponseEntity<List<Appointment>> myappointments (Authentication a) {
 		User u=userService.getByEmail(a.getName().toString());
 		
 		List<Appointment> appointments = appointmentService.userAppointment(u);

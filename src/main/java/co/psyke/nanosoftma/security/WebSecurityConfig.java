@@ -48,8 +48,8 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests((auth)->
 				auth
-					.requestMatchers("/register","/h2-ui**","/error").permitAll()
-					.requestMatchers("**h2**").permitAll()
+					.requestMatchers("/register","/error").permitAll()
+					.requestMatchers("/h2-ui/**").permitAll()
 					.requestMatchers("/admin").hasRole("ADMIN")
 					.anyRequest().authenticated()
 			)
@@ -88,6 +88,7 @@ public class WebSecurityConfig {
 				}
 				
 			})
+			.headers(header-> header.frameOptions(frame->frame.disable()))
 			.csrf((csrf)->{
 				csrf.disable();
 			})

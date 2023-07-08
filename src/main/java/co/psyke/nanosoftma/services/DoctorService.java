@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.psyke.nanosoftma.entities.Doctor;
-import co.psyke.nanosoftma.entities.User;
-import co.psyke.nanosoftma.models.UserForm;
+import co.psyke.nanosoftma.models.DoctorType;
 import co.psyke.nanosoftma.repositories.DoctorRepositories;
 
 @Service
@@ -16,17 +15,19 @@ public class DoctorService {
 	@Autowired
 	private DoctorRepositories doctorRepositories; 
 
-	public Doctor registerDoctor(UserForm uf){
-		User u = new User(uf.email(),uf.name());
-		
-		Doctor d= new Doctor(uf.email(),u, uf.doctorType());
-		
-		return doctorRepositories.save(d);
-	}
-
 	public List<Doctor> listDoctor() {
 		List<Doctor> lista = doctorRepositories.findAll();
 
 		return lista;
+	}
+
+	public List<Doctor> searchBySpecialty (String search) {
+		if(!DoctorType.present(search)){
+			throw new IllegalArgumentException("no specialty found with identifier "+search);
+		}
+		
+		List<Doctor> lista = doctorRepositories.findBySpecialty(search); 
+
+		return lista; 
 	}
 }

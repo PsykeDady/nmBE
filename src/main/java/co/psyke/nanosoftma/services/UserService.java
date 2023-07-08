@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.Credential;
+import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;
 import co.psyke.nanosoftma.models.UserForm;
 import co.psyke.nanosoftma.repositories.CredentialRepository;
+import co.psyke.nanosoftma.repositories.DoctorRepositories;
 import co.psyke.nanosoftma.repositories.UserRepositories;
 import jakarta.transaction.Transactional;
 
@@ -23,9 +25,12 @@ public class UserService {
 	@Autowired
 	private CredentialRepository credentialRepository; 
 
+	@Autowired
+	private DoctorRepositories doctorRepositories;
+
 	public void deleteUser (String email) {
 		credentialRepository.deleteById(email);
-		userRepositories.deleteById(email);
+		doctorRepositories.deleteById(email);
 	}
 
 	public void register(UserForm uf){
@@ -36,6 +41,15 @@ public class UserService {
 		u = userRepositories.save(u); 
 		String pskH =  cryptedPsk(uf.pskH()); 
 		Credential c = new Credential(null,u,pskH); 
+
+		switch (uf.user()){
+			case DOCTOR: 
+				Doctor d= new Doctor(null,u, uf.doctorType());
+				doctorRepositories.save(d);
+			break; 
+
+			default: ; 
+		}
 
 		credentialRepository.save(c);
 	}
@@ -50,13 +64,5 @@ public class UserService {
 			throw new IllegalArgumentException();
 		}
 		userRepositories.save(u);
-	}
-
-	public void viewCalendar(User u){
-
-	}
-
-	public void newAppointment(Appointment a){
-
 	}
 }

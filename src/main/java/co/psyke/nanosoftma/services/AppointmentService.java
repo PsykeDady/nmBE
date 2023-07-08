@@ -10,20 +10,35 @@ import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;
 import co.psyke.nanosoftma.repositories.AppointmentRepositories;
+import co.psyke.nanosoftma.repositories.UserRepositories;
+import co.psyke.nanosoftma.validators.AppointmentDateValidation;
 
 @Service
 public class AppointmentService {
 	
 	@Autowired
-	private UserService userService;
+	private UserRepositories userRepositories;
+
+	@Autowired
+	private AppointmentDateValidation appointmentDateValidation;
 
 	@Autowired
 	private AppointmentRepositories appointmentRepositories; 
 
 	public Long registerAppointment (String email, Doctor d, LocalDateTime l) {
 		Appointment a = new Appointment(); 
-		User u= userService.getByEmail(email);
+		User u= userRepositories.findById(email).get();
 		
+		List<Appointment> doctorsAppointment = appointmentRepositories.findByDoctor(d);
+
+		if(doctorsAppointment.size()>10){
+			throw new IllegalArgumentException("too many appointment for this doctor");
+		}
+
+		if(!appointmentDateValidation.validDate(l,doctorsAppointment)){
+			throw new IllegalArgumentException("not valid date");
+		}
+
 		a.setDoctor(d);
 		a.setUser(u);
 		a.setAppointmentDate(l);
