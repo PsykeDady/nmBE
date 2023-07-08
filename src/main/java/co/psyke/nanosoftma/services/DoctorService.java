@@ -22,11 +22,13 @@ public class DoctorService {
 	}
 
 	public List<Doctor> searchBySpecialty (String search) {
-		if(!DoctorType.present(search)){
+		search=search.toUpperCase();
+		DoctorType type=DoctorType.find(search);
+		if(type==null){
 			throw new IllegalArgumentException("no specialty found with identifier "+search);
 		}
 		
-		List<Doctor> lista = doctorRepositories.findBySpecialty(search); 
+		List<Doctor> lista = doctorRepositories.findBySpecialty(type); 
 
 		return lista; 
 	}

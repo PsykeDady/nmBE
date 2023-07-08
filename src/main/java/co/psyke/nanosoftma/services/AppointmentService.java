@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;
+import co.psyke.nanosoftma.models.AppointmentForm;
 import co.psyke.nanosoftma.repositories.AppointmentRepositories;
+import co.psyke.nanosoftma.repositories.DoctorRepositories;
 import co.psyke.nanosoftma.repositories.UserRepositories;
 import co.psyke.nanosoftma.validators.AppointmentDateValidation;
 
@@ -24,6 +26,9 @@ public class AppointmentService {
 
 	@Autowired
 	private AppointmentRepositories appointmentRepositories; 
+
+	@Autowired
+	private DoctorRepositories doctorRepositories;
 
 	public Long registerAppointment (String email, Doctor d, LocalDateTime l) {
 		Appointment a = new Appointment(); 
@@ -49,6 +54,14 @@ public class AppointmentService {
 
 
 	public List<Appointment> userAppointment(User u){
-		return appointmentRepositories.findByUser(u);
+
+		Doctor d= doctorRepositories.findById(u.getEmail()).orElse(null);
+		
+		if(d==null){
+			return appointmentRepositories.findByUser(u);
+		}
+
+		return appointmentRepositories.findByDoctor(d);
+
 	}
 }

@@ -28,11 +28,11 @@ public enum DoctorType {
 	PSYCHIATRY,
 	NONE;
 
-	public static boolean present(String s) {
+	public static DoctorType find(String s) {
 		for(DoctorType type : values()){
 			if(type.toString().equals(s)) 
-				return true; 
+				return type; 
 		}	
-		return false; 
+		return null; 
 	}
 }

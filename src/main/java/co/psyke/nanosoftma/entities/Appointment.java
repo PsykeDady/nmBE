@@ -2,6 +2,9 @@ package co.psyke.nanosoftma.entities;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import co.psyke.nanosoftma.serializers.AppointmentSerializer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode
+@JsonSerialize(using = AppointmentSerializer.class)
 public class Appointment{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

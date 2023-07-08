@@ -1,5 +1,7 @@
 package co.psyke.nanosoftma.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import co.psyke.nanosoftma.models.DoctorType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ public class Doctor {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "user_email")
 	@MapsId
+	@JsonSerialize(as=User.class)
 	private User u;
 
 	@NotNull
