@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.psyke.nanosoftma.entities.Appointment;
 import co.psyke.nanosoftma.entities.User;
 import co.psyke.nanosoftma.models.AppointmentForm;
+import co.psyke.nanosoftma.models.UserForm;
 import co.psyke.nanosoftma.services.AppointmentService;
 import co.psyke.nanosoftma.services.UserService;
 import jakarta.validation.Valid;
@@ -39,8 +40,8 @@ public class UserController {
 
 	@GetMapping("/myappointments")
 	public ResponseEntity<List<Appointment>> myappointments (Authentication a) {
-		User u=userService.getByEmail(a.getName().toString());
-		
+		UserForm uf=userService.getByEmail(a.getName().toString());
+		User u = new User(uf.email(), uf.name());
 		List<Appointment> appointments = appointmentService.userAppointment(u);
 
 		return ResponseEntity.ok().body(appointments); 

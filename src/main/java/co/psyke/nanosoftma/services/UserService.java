@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import co.psyke.nanosoftma.entities.Credential;
 import co.psyke.nanosoftma.entities.Doctor;
 import co.psyke.nanosoftma.entities.User;
+import co.psyke.nanosoftma.models.DoctorType;
 import co.psyke.nanosoftma.models.UserForm;
+import co.psyke.nanosoftma.models.UserType;
 import co.psyke.nanosoftma.repositories.CredentialRepository;
 import co.psyke.nanosoftma.repositories.DoctorRepositories;
 import co.psyke.nanosoftma.repositories.UserRepositories;
@@ -53,9 +55,12 @@ public class UserService {
 		credentialRepository.save(c);
 	}
 
-	public User getByEmail (String email) {
-		User u = userRepositories.findById(email).get(); 
-		return u;
+	public UserForm getByEmail (String email) {
+		User u = userRepositories.findById(email).get();
+		Doctor d = doctorRepositories.findById(email).orElse(null);
+
+		UserForm uf = new UserForm(u.getName(), email,null ,d==null?UserType.USER:UserType.DOCTOR,d==null? DoctorType.NONE:d.getSpecialty());
+		return uf;
 	}
 
 	public void editInfo(User u){

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.psyke.nanosoftma.entities.User;
 import co.psyke.nanosoftma.models.UserForm;
 import co.psyke.nanosoftma.services.UserService;
 import jakarta.validation.Valid;
@@ -30,8 +29,8 @@ public class LoginController {
 	}
 
 	@GetMapping("/login")
-	public ResponseEntity<User> login (Authentication authentication){
-		User u= userService.getByEmail(authentication.getName().toString());
-		return ResponseEntity.ok().body(u);
+	public ResponseEntity<UserForm> login (Authentication authentication){
+		UserForm uf= userService.getByEmail(authentication.getName().toString());
+		return ResponseEntity.ok().body(uf);
 	}
 }
